@@ -4,7 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Морской бой</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    #start-game-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #start-game-form input {
+      margin: 10px;
+      padding: 10px;
+      width: 200px;
+    }
+
+    #start-game-form button {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <h1>Морской бой</h1>
@@ -13,6 +35,26 @@
     <input type="text" id="player2-name" placeholder="Имя игрока 2" required>
     <button type="submit">Начать игру</button>
   </form>
-  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const startGameForm = document.getElementById('start-game-form');
+      
+      if (startGameForm) {
+        startGameForm.addEventListener('submit', event => {
+          event.preventDefault();
+          
+          const player1Name = document.getElementById('player1-name').value;
+          const player2Name = document.getElementById('player2-name').value;
+
+          // Сохранение имен игроков в локальном хранилище
+          localStorage.setItem('player1', player1Name);
+          localStorage.setItem('player2', player2Name);
+
+          // Переход на страницу игры
+          window.location.href = 'game.html';
+        });
+      }
+    });
+  </script>
 </body>
 </html>
