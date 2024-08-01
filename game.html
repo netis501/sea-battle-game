@@ -12,33 +12,72 @@
 
     #game-board {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       margin-top: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(10, 30px);
+      grid-template-rows: repeat(10, 30px);
+      gap: 2px;
+    }
+
+    .cell {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <h1>Морской бой</h1>
   <div id="game-board">
-    <!-- Поле для игры будет здесь -->
+    <div class="grid" id="player1-board"></div>
+    <div class="grid" id="player2-board"></div>
+    <button id="next-turn">Следующий ход</button>
   </div>
   <script>
+    const player1Board = document.getElementById('player1-board');
+    const player2Board = document.getElementById('player2-board');
+    const nextTurnButton = document.getElementById('next-turn');
+    let currentPlayer = 1;
+
+    function createBoard(boardElement) {
+      for (let i = 0; i < 100; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.addEventListener('click', () => handleCellClick(cell));
+        boardElement.appendChild(cell);
+      }
+    }
+
+    function handleCellClick(cell) {
+      if (cell.textContent === '') {
+        cell.textContent = currentPlayer === 1 ? 'X' : 'O';
+      }
+    }
+
+    nextTurnButton.addEventListener('click', () => {
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
+      alert(`Ход игрока ${currentPlayer}`);
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
       const player1Name = localStorage.getItem('player1');
       const player2Name = localStorage.getItem('player2');
 
       if (player1Name && player2Name) {
-        initializeGame(player1Name, player2Name);
+        document.querySelector('h1').textContent = `${player1Name} vs ${player2Name}`;
+        createBoard(player1Board);
+        createBoard(player2Board);
       }
     });
-
-    function initializeGame(player1, player2) {
-      const gameBoard = document.getElementById('game-board');
-      
-      // Здесь будет логика для инициализации игрового поля
-      gameBoard.innerHTML = `<p>Играют ${player1} против ${player2}</p>`;
-      // Добавьте сюда вашу логику для морского боя
-    }
   </script>
 </body>
 </html>
