@@ -4,13 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Игра</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    #game-board {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
   <h1>Морской бой</h1>
   <div id="game-board">
     <!-- Поле для игры будет здесь -->
   </div>
-  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const player1Name = localStorage.getItem('player1');
+      const player2Name = localStorage.getItem('player2');
+
+      if (player1Name && player2Name) {
+        initializeGame(player1Name, player2Name);
+      }
+    });
+
+    function initializeGame(player1, player2) {
+      const gameBoard = document.getElementById('game-board');
+      
+      // Здесь будет логика для инициализации игрового поля
+      gameBoard.innerHTML = `<p>Играют ${player1} против ${player2}</p>`;
+      // Добавьте сюда вашу логику для морского боя
+    }
+  </script>
 </body>
 </html>
